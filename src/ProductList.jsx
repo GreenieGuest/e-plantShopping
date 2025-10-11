@@ -239,16 +239,16 @@ function ProductList({ onHomeClick }) {
     }
 
     const handleHomeClick = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         onHomeClick();
     };
 
     const handleCartClick = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         setShowCart(true); // Set showCart to true when cart icon is clicked
     };
     const handlePlantsClick = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
         setShowCart(false); // Hide the cart when navigating to About Us
     };
@@ -260,11 +260,15 @@ function ProductList({ onHomeClick }) {
             ...prevState,
             [e.name]: true,
         }));
-        e.preventDefault();
+        //e.preventDefault();
     }
 
+    const calculateTotalQuantity = () => {
+        return CartItems ? CartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+    };
+
     const handleContinueShopping = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         setShowCart(false);
     };
     return (
@@ -302,7 +306,14 @@ function ProductList({ onHomeClick }) {
                                         <div className="product-title">{plant.name}</div>
                                         <div className="product-description">{plant.description}</div>
                                         <div className="product-cost">{plant.cost}</div>
-                                        <button className="product-button" onClick={() => handleAddToCart(plant)}>Add To Cart</button>
+                                        <button
+                                            className="product-button"
+                                            onClick={() => handleAddToCart(plant)}
+                                            disabled={addedToCart[plant.name]}
+                                            style={addedToCart[plant.name] ? { backgroundColor: 'grey', cursor: 'not-allowed' } : {}}
+                                            >
+                                            {addedToCart[plant.name] ? "Already In Cart" : "Add to Cart"}
+                                        </button>
                                     </div>
                                 ))}
                             </div>
