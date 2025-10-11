@@ -9,7 +9,7 @@ export const CartSlice = createSlice({
     addItem: (state, action) => {
         const { name, image, cost } = action.payload;
         const existingItem = state.items.find(item => item.name === name);
-
+        console.log("TEST")
         if (existingItem) {
             existingItem.quantity++;
         } else {
